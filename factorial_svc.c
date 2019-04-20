@@ -3,7 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include "fact.h"
+#include "factorial.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <rpc/pmap_clnt.h>
@@ -20,7 +20,7 @@ static void
 fact_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		number factorial_1_arg;
+		factorial_in factorial_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -32,8 +32,8 @@ fact_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		return;
 
 	case factorial:
-		_xdr_argument = (xdrproc_t) xdr_number;
-		_xdr_result = (xdrproc_t) xdr_int;
+		_xdr_argument = (xdrproc_t) xdr_factorial_in;
+		_xdr_result = (xdrproc_t) xdr_factorial_out;
 		local = (char *(*)(char *, struct svc_req *)) factorial_1_svc;
 		break;
 

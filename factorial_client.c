@@ -4,29 +4,29 @@
  * as a guideline for developing your own functions.
  */
 
-#include "fact.h"
+#include "factorial.h"
 
 
 void
-fact_prog_1(char *host, int num)
+fact_prog_1(char *host, long int num)
 {
 	CLIENT *clnt;
-	int  *result_1;
-	number  factorial_1_arg;
+	factorial_out  *out;
+	factorial_in  in;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, FACT_PROG, FACT_VERS, "udp");
+	clnt = clnt_create (host, FACT_PROG, FACT_VERS, "tcp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
-	factorial_1_arg.n = num;
-	result_1 = factorial_1(&factorial_1_arg, clnt);
-	if (result_1 == (int *) NULL) {
+	in.arg1 = num;
+	out = factorial_1(&in, clnt);
+	if (out == (factorial_out *) NULL) {
 		clnt_perror (clnt, "call failed");
-	} else {
-		printf("Result: %d",*result_1);
+	}else {
+		printf("Result: %ld\n", out->res1);
 	}
 #ifndef	DEBUG
 	clnt_destroy (clnt);
@@ -44,6 +44,6 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	fact_prog_1 (host, atoi(argv[2]));
+	fact_prog_1 (host, atol(argv[2]));
 exit (0);
 }
